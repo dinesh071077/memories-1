@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will You Marry Me?</title>
+
+<style>
+body{
+    margin:0;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    min-height:100vh;
+    background:linear-gradient(135deg,#ff758c,#ff7eb3);
+    font-family:Arial, sans-serif;
+    overflow-x:hidden;
+    padding:15px;
+}
+
+.card{
+    background:white;
+    padding:24px;
+    border-radius:22px;
+    text-align:center;
+    box-shadow:0 15px 30px rgba(0,0,0,0.2);
+    width:100%;
+    max-width:600px;
+}
+
+h1{
+    color:#ff4d6d;
+    margin:12px 0;
+    font-size:1.6rem;
+}
+
+#poem{
+    font-size:15px;
+    color:#444;
+    line-height:1.7;
+    margin-bottom:18px;
+}
+
+button{
+    padding:12px 26px;
+    font-size:1rem;
+    border:none;
+    border-radius:30px;
+    cursor:pointer;
+    margin:6px;
+}
+
+#yes{
+    background:#ff4d6d;
+    color:white;
+}
+
+#no{
+    background:#ddd;
+    position:absolute;
+}
+
+.heart{
+    position:absolute;
+    color:white;
+    font-size:22px;
+    animation:float 6s linear infinite;
+    opacity:0.8;
+}
+
+@keyframes float{
+    from{transform:translateY(100vh);}
+    to{transform:translateY(-10vh);}
+}
+
+@media (max-width:480px){
+    h1{font-size:1.3rem;}
+    #poem{font-size:14px;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <div id="poem"></div>
+    <h1>Will you marry me? 💖</h1>
+    <button id="yes" onclick="yesClick()">YES</button>
+    <button id="no" onmouseover="moveNo()">NO</button>
+</div>
+
+<!-- 🎵 Background Music -->
+<audio id="loveSong" loop>
+    <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const kavithai = `விடை தெரிந்த நான்…
+நிஜமும் என்னுடையதல்ல…
+நிழலும் என்னுடையதல்ல…
+
+நீ தந்த நினைவு மட்டுமே என்னுடையது,
+உன் நினைவு என்றும் அழியாத ஒன்று… ❤️
+
+மனிதனின் மூளை மிகுந்த சக்தி கொண்டது,
+ஆனால் நாம் அதை உடல் செயல்களுக்காக
+10% மட்டுமே பயன்படுத்துகிறோம்.
+
+100%  பயன்படுத்தினால் –
+உடல் செல்களையும் திசுக்களையும் மாற்றி,
+உடலையே மறையச் செய்யலாம்.
+
+இது மனித இனத்திற்கே அல்ல,
+உலகத்திற்கே ஒரு பேராற்றல்.
+
+அந்த பேராற்றல் பெண்ணிடமே ஒருவகையில் ஒளிந்திருக்கிறது…
+கர்ப்பத்தின் போது,
+குழந்தையின் வளர்ச்சிக்காக உருவாகும் CPH2
+அதுவே குழந்தையின் வளர்ச்சிக்கு மிக முக்கியமான சக்தியாக மாறுகிறது.
+
+மரணத்திற்குப் பிறகு,
+அந்த ஏழு நிமிடங்களில்
+மூளையின் செயல்பாடு பல மடங்கு அதிகரிக்கும்.
+
+வாழ்க்கையில் நடந்த
+ஒவ்வொரு அற்புத நினைவுகளும்
+அந்த நேரத்தில் மீண்டும் தோன்றும்…
+
+அப்போது…
+நீயும் என் நினைவுகளில் இடம் பெறுவாய். ❤️
+
+நான் உன்னை தவறத்தான் விட்டேன்…
+நீ என்னை வாழ்க்கையிலிருந்து இழந்துவிட்டாய்.
+
+உன்னைப் போல பெண் எனக்கு கிடைப்பது சுலபம்,
+என்னைப் போல ஆண் உனக்கு கிடைப்பது ஆயிரத்தில் ஒருவன்.
+
+உன் மனதை காயப்படுத்த அல்ல…
+என் கண்ணீரின் காரணத்தைச் சொல்கிறேன்.`;
+
+let index = 0;
+const speed = 35;
+
+function typePoem(){
+    if(index < kavithai.length){
+        document.getElementById("poem").innerHTML += kavithai.charAt(index);
+        index++;
+        setTimeout(typePoem, speed);
+    }
+}
+
+typePoem();
+
+const song = document.getElementById("loveSong");
+
+// ✅ Auto play on first interaction (mobile safe)
+document.addEventListener("click", () => {
+    song.volume = 0.6;
+    song.play();
+}, { once:true });
+
+function yesClick(){
+    song.play();
+    document.body.innerHTML = "<h1 style='color:white;font-size:3rem;text-align:center;'>She said YES! 💍❤️</h1>";
+}
+
+function moveNo(){
+    const noBtn = document.getElementById("no");
+    const x = Math.random() * (window.innerWidth - 120);
+    const y = Math.random() * (window.innerHeight - 80);
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+}
+
+function createHeart(){
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * window.innerWidth + "px";
+    heart.style.fontSize = Math.random() * 18 + 14 + "px";
+    document.body.appendChild(heart);
+    setTimeout(()=> heart.remove(),6000);
+}
+
+setInterval(createHeart, 300);
+</script>
+
+</body>
+</html>
